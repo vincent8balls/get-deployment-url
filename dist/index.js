@@ -27914,11 +27914,11 @@ async function tryGetResult(args) {
   const edges = lodash_es_get(result, "repository.ref.target.deployments.edges");
   if (!edges) return null;
 
-  edges.forEach(edge => {
+  for(const edge in edges) {
     if(edge.node.latestEnvironment == environment) {
       return edge.node.latestStatus.environmentUrl
     }
-  })
+  }
 
   return false
 }
