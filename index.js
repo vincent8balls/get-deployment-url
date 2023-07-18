@@ -25,12 +25,9 @@ async function tryGetResult(args) {
   const edges = get(result, "repository.ref.target.deployments.edges");
   if (!edges) return null;
 
-  console.log(edges)
-
   for(const edge in edges) {
-    console.log('edge', edge)
-    if(edge.node.latestEnvironment == environment) {
-      return edge.node.latestStatus.environmentUrl
+    if(edges[edge].node.latestEnvironment == environment) {
+      return edges[edge].node.latestStatus.environmentUrl
     }
   }
 
