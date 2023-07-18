@@ -6,6 +6,7 @@ module.exports = `query($repo: String!, $owner: String!, $branch: String!) {
           deployments(last: 1) {
             edges {
               node {
+                latestEnvironment
                 latestStatus {
                   environmentUrl
                 }

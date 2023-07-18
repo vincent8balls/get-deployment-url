@@ -24,6 +24,13 @@ async function tryGetResult(args) {
   console.log(result)
   const edges = get(result, "repository.ref.target.deployments.edges");
   if (!edges) return null;
+
+  edges.forEach(edge => {
+      console.log(edge)
+      console.log(edge.node.latestEnvironment)
+      console.log(edge.node.latestStatus)
+  })
+
   return get(edges, `[0].node.latestStatus.environmentUrl`, null);
 }
 
