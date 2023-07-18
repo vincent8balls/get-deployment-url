@@ -27914,7 +27914,10 @@ async function tryGetResult(args) {
   const edges = lodash_es_get(result, "repository.ref.target.deployments.edges");
   if (!edges) return null;
 
+  console.log(edges)
+
   for(const edge in edges) {
+    console.log('edge', edge)
     if(edge.node.latestEnvironment == environment) {
       return edge.node.latestStatus.environmentUrl
     }
