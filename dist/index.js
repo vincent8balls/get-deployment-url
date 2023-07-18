@@ -27907,20 +27907,20 @@ async function getDeployment(args, retryInterval) {
 
 async function tryGetResult(args) {
   const octokit = Object(github.getOctokit)(Object(core.getInput)("token", { required: true }));
+  const environment = Object(core.getInput)("token", { required: true })
   const result = await octokit.graphql(query_default.a, args);
   await waitForRateLimitReset(result);
 
-  console.log(result)
   const edges = lodash_es_get(result, "repository.ref.target.deployments.edges");
   if (!edges) return null;
 
   edges.forEach(edge => {
-      console.log(edge)
-      console.log(edge.node.latestEnvironment)
-      console.log(edge.node.latestStatus)
+    if(edge.node.latestEnvironment == environment) {
+      return edge.node.latestStatus.environmentUrl
+    }
   })
 
-  return lodash_es_get(edges, `[0].node.latestStatus.environmentUrl`, null);
+  return false
 }
 
 async function waitForRateLimitReset(result) {
