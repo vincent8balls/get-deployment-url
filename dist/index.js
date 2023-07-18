@@ -2110,6 +2110,7 @@ module.exports = `query($repo: String!, $owner: String!, $branch: String!) {
           deployments(last: 1) {
             edges {
               node {
+                latestEnvironment
                 latestStatus {
                   environmentUrl
                 }
@@ -27909,8 +27910,16 @@ async function tryGetResult(args) {
   const result = await octokit.graphql(query_default.a, args);
   await waitForRateLimitReset(result);
 
+  console.log(result)
   const edges = lodash_es_get(result, "repository.ref.target.deployments.edges");
   if (!edges) return null;
+
+  edges.forEach(edge => {
+      console.log(edge)
+      console.log(edge.node.latestEnvironment)
+      console.log(edge.node.latestStatus)
+  })
+
   return lodash_es_get(edges, `[0].node.latestStatus.environmentUrl`, null);
 }
 
