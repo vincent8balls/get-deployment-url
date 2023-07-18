@@ -27,6 +27,8 @@ async function tryGetResult(args) {
 
   let environmentUrl = false
   for(const edge in edges) {
+    console.log(edge)
+    console.log(edges[edge])
     if(edges[edge].node.latestEnvironment == environment) {
       environmentUrl = edges[edge].node.latestStatus.environmentUrl
     }
