@@ -25,13 +25,14 @@ async function tryGetResult(args) {
   const edges = get(result, "repository.ref.target.deployments.edges");
   if (!edges) return null;
 
+  let environmentUrl = false
   for(const edge in edges) {
     if(edges[edge].node.latestEnvironment == environment) {
-      return edges[edge].node.latestStatus.environmentUrl
+      environmentUrl = edges[edge].node.latestStatus.environmentUrl
     }
   }
 
-  return false
+  return environmentUrl
 }
 
 async function waitForRateLimitReset(result) {
