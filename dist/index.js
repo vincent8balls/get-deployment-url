@@ -2107,7 +2107,7 @@ module.exports = `query($repo: String!, $owner: String!, $branch: String!) {
     ref(qualifiedName: $branch) {
       target {
         ... on Commit {
-          deployments(last: 1) {
+          deployments(last: 10) {
             edges {
               node {
                 latestEnvironment
@@ -27914,12 +27914,9 @@ async function tryGetResult(args) {
   const edges = lodash_es_get(result, "repository.ref.target.deployments.edges");
   if (!edges) return null;
 
-  console.log(edges)
-
   for(const edge in edges) {
-    console.log('edge', edge)
-    if(edge.node.latestEnvironment == environment) {
-      return edge.node.latestStatus.environmentUrl
+    if(edges[edge].node.latestEnvironment == environment) {
+      return edges[edge].node.latestStatus.environmentUrl
     }
   }
 
