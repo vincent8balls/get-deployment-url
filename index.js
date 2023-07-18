@@ -21,6 +21,7 @@ async function tryGetResult(args) {
   const result = await octokit.graphql(query, args);
   await waitForRateLimitReset(result);
 
+  console.log(result)
   const edges = get(result, "repository.ref.target.deployments.edges");
   if (!edges) return null;
   return get(edges, `[0].node.latestStatus.environmentUrl`, null);
