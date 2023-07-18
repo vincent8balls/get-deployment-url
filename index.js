@@ -38,9 +38,7 @@ async function waitForRateLimitReset(result) {
 async function run() {
   try {
     const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
-    const branch =
-      process.env.GITHUB_HEAD_REF ||
-      process.env.GITHUB_REF.match(/(?<=refs\/heads\/).+/g)[0];
+    const branch = getInput("branch", { required: true });
     const retryInterval = Number(getInput("retryInterval"));
 
     const args = { repo, owner, branch };
