@@ -27907,7 +27907,7 @@ async function getDeployment(args, retryInterval) {
 
 async function tryGetResult(args) {
   const octokit = Object(github.getOctokit)(Object(core.getInput)("token", { required: true }));
-  const environment = Object(core.getInput)("token", { required: true })
+  const environment = Object(core.getInput)("environment", { required: true })
   const result = await octokit.graphql(query_default.a, args);
   await waitForRateLimitReset(result);
 
@@ -27915,10 +27915,7 @@ async function tryGetResult(args) {
   if (!edges) return null;
 
   let environmentUrl = false
-  console.log(edges)
   for(const edge in edges) {
-    console.log(edge)
-    console.log(edges[edge])
     if(edges[edge].node.latestEnvironment == environment) {
       environmentUrl = edges[edge].node.latestStatus.environmentUrl
     }

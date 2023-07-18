@@ -18,7 +18,7 @@ async function getDeployment(args, retryInterval) {
 
 async function tryGetResult(args) {
   const octokit = getOctokit(getInput("token", { required: true }));
-  const environment = getInput("token", { required: true })
+  const environment = getInput("environment", { required: true })
   const result = await octokit.graphql(query, args);
   await waitForRateLimitReset(result);
 
@@ -26,10 +26,7 @@ async function tryGetResult(args) {
   if (!edges) return null;
 
   let environmentUrl = false
-  console.log(edges)
   for(const edge in edges) {
-    console.log(edge)
-    console.log(edges[edge])
     if(edges[edge].node.latestEnvironment == environment) {
       environmentUrl = edges[edge].node.latestStatus.environmentUrl
     }
