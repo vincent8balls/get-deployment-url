@@ -26,6 +26,7 @@ async function tryGetResult(args) {
   if (!edges) return null;
 
   let environmentUrl = false
+  console.log(edges)
   for(const edge in edges) {
     console.log(edge)
     console.log(edges[edge])
