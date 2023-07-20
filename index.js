@@ -4,12 +4,13 @@ import { get } from "lodash-es";
 import query from "./query.gql";
 
 async function getDeployment(args, retryInterval) {
+  const environment_name = getInput("environment", { required: true })
   let environment = null;
   while (!environment) {
     environment = await tryGetResult(args);
     if (!environment)
       console.log(
-        `environment is null, waiting ${retryInterval} milliseconds and trying again`
+        `can not find environment ${environment_name} URL yet, waiting ${retryInterval} milliseconds and trying again`
       );
     await new Promise((resolve) => setTimeout(resolve, retryInterval));
   }
